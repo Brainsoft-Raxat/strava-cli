@@ -189,7 +189,7 @@ func buildAuthURL(clientID, redirectURI string) string {
 // and refreshes it if necessary, updating cfg in-place and saving it.
 func RefreshIfExpired(cfg *config.Config) error {
 	if cfg.Tokens.AccessToken == "" {
-		return fmt.Errorf("not authenticated — run: strava auth login")
+		return fmt.Errorf("not authenticated — run: stravacli auth login")
 	}
 	// Refresh 30 seconds before expiry
 	if time.Now().Unix()+30 < cfg.Tokens.ExpiresAt {
@@ -197,7 +197,7 @@ func RefreshIfExpired(cfg *config.Config) error {
 	}
 	tokens, err := refreshTokens(cfg.ClientID, cfg.ClientSecret, cfg.Tokens.RefreshToken)
 	if err != nil {
-		return fmt.Errorf("refresh token: %w\n  Hint: your session may have been revoked; run: strava auth login", err)
+		return fmt.Errorf("refresh token: %w\n  Hint: your session may have been revoked; run: stravacli auth login", err)
 	}
 	cfg.Tokens = *tokens
 	return config.Save(cfg)
@@ -307,7 +307,7 @@ func CompleteRemoteLogin(clientID, clientSecret, redirectURI, expectedState, pas
 			return nil, fmt.Errorf("no state parameter found in the pasted URL\n  Hint: paste the full redirect URL, e.g. http://localhost:8089/callback?code=...&state=...")
 		}
 		if gotState != expectedState {
-			return nil, fmt.Errorf("state mismatch — possible CSRF attack or stale URL\n  Run 'strava auth login --remote' again to get a fresh URL")
+			return nil, fmt.Errorf("state mismatch — possible CSRF attack or stale URL\n  Run 'stravacli auth login --remote' again to get a fresh URL")
 		}
 	}
 	if code == "" {

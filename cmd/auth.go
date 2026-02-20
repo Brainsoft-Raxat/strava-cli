@@ -34,10 +34,10 @@ You need a Strava API application. Create one at:
 Remote / VPS login (two-step, no browser or open port required on the server):
 
   # Step 1: generate the auth URL and save CSRF state
-  strava auth login --remote
+  stravacli auth login --remote
 
   # Step 2: after authorizing in your local browser, paste the redirect URL back
-  strava auth login --auth-url 'http://localhost:8089/callback?code=...&state=...'`,
+  stravacli auth login --auth-url 'http://localhost:8089/callback?code=...&state=...'`,
 	RunE: runAuthLogin,
 }
 
@@ -156,20 +156,20 @@ func startRemoteLogin(cfg *config.Config) error {
 	fmt.Printf("Strava will redirect to:\n  %s?code=<code>&state=<state>\n", redirectURI)
 	fmt.Println()
 	fmt.Println("Copy that URL (even if the page shows 'connection refused') and run:")
-	fmt.Println("  strava auth login --auth-url '<paste full URL here>'")
+	fmt.Println("  stravacli auth login --auth-url '<paste full URL here>'")
 	return nil
 }
 
 // completeRemoteLogin is step 2: validate state, exchange code, store tokens.
 func completeRemoteLogin(cfg *config.Config) error {
 	if cfg.PendingAuth == nil {
-		return fmt.Errorf("no pending login found — run 'strava auth login --remote' first")
+		return fmt.Errorf("no pending login found — run 'stravacli auth login --remote' first")
 	}
 	pending := cfg.PendingAuth
 	if time.Now().Unix() > pending.ExpiresAt {
 		cfg.PendingAuth = nil
 		_ = config.Save(cfg)
-		return fmt.Errorf("auth URL expired — run 'strava auth login --remote' again to get a fresh one")
+		return fmt.Errorf("auth URL expired — run 'stravacli auth login --remote' again to get a fresh one")
 	}
 
 	tokens, err := auth.CompleteRemoteLogin(
@@ -196,7 +196,7 @@ func runAuthStatus(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("load config: %w", err)
 	}
 	if cfg.ClientID == "" {
-		fmt.Println("Not authenticated — run: strava auth login")
+		fmt.Println("Not authenticated — run: stravacli auth login")
 		return nil
 	}
 
@@ -205,7 +205,7 @@ func runAuthStatus(cmd *cobra.Command, args []string) error {
 		fmt.Printf("Redirect URI: %s\n", cfg.RedirectURI)
 	}
 	if cfg.PendingAuth != nil {
-		fmt.Println("Pending:      remote login in progress (run 'strava auth login --auth-url ...' to complete)")
+		fmt.Println("Pending:      remote login in progress (run 'stravacli auth login --auth-url ...' to complete)")
 	}
 
 	if cfg.Tokens.AccessToken == "" {
@@ -247,6 +247,6 @@ func runAuthLogout(cmd *cobra.Command, args []string) error {
 	if err := os.Remove(path); err != nil {
 		return fmt.Errorf("remove config: %w", err)
 	}
-	fmt.Println("Logged out. Run 'strava auth login' to re-authenticate.")
+	fmt.Println("Logged out. Run 'stravacli auth login' to re-authenticate.")
 	return nil
 }

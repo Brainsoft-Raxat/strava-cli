@@ -115,7 +115,7 @@ func loadAndRefresh() (*config.Config, error) {
 		return nil, fmt.Errorf("load config: %w", err)
 	}
 	if cfg.ClientID == "" {
-		return nil, fmt.Errorf("not configured — run: strava auth login")
+		return nil, fmt.Errorf("not configured — run: stravacli auth login")
 	}
 	return cfg, nil
 }
@@ -125,7 +125,7 @@ func apiError(status int, body []byte) error {
 	hint := ""
 	switch status {
 	case 401:
-		hint = " — run: strava auth login"
+		hint = " — run: stravacli auth login"
 	case 403:
 		hint = " — check OAuth scopes at https://www.strava.com/settings/api"
 	case 404:
