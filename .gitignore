@@ -6,3 +6,4 @@ strava.swagger.json
 strava.openapi.json
 strava.bundled.json
 strava.openapi.bundled.json
+dist/
