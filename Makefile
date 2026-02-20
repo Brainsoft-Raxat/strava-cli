@@ -3,14 +3,15 @@
 BINARY   := stravacli
 VERSION  := $(shell git describe --tags --dirty 2>/dev/null || echo "dev")
 LDFLAGS  := -ldflags "-X main.version=$(VERSION)"
+MAINPKG  := ./cmd/stravacli
 
-## build: compile the binary to ./strava
+## build: compile the binary to ./stravacli
 build:
-	go build $(LDFLAGS) -o $(BINARY) .
+	go build $(LDFLAGS) -o $(BINARY) $(MAINPKG)
 
 ## install: install the binary to $GOPATH/bin
 install:
-	go install $(LDFLAGS) .
+	go install $(LDFLAGS) $(MAINPKG)
 
 ## test: run all tests with race detector
 test:

@@ -25,7 +25,7 @@ sudo mv stravacli /usr/local/bin/
 **Go install:**
 
 ```bash
-go install github.com/Brainsoft-Raxat/strava-cli@latest
+go install github.com/Brainsoft-Raxat/strava-cli/cmd/stravacli@latest
 ```
 
 **Build from source:**
@@ -251,13 +251,14 @@ make clean      # remove binary and dist/
 │   ├── routes.go           # list, get, export
 │   ├── segments.go         # get, starred, explore, efforts list/get
 │   ├── uploads.go          # get + polling helpers
-│   └── helpers.go          # apiClient, rawClient, confirmMutation
+│   ├── helpers.go          # apiClient, rawClient, confirmMutation
+│   └── stravacli/
+│       └── main.go         # CLI entrypoint (main package)
 ├── internal/
 │   ├── auth/               # OAuth2 login + token refresh
 │   ├── client/             # Generated OpenAPI client + retrying transport
 │   ├── config/             # JSON config persistence (~/.config/strava-cli/)
 │   └── output/             # Human-readable and JSON printers
-├── main.go
 ├── strava.minimal.json     # Trimmed OpenAPI 3.0 spec (26 operations)
 ├── oapi-codegen.yaml       # Code generation config
 └── Makefile

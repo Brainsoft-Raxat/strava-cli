@@ -1,6 +1,6 @@
 # Binary
-strava
-stravacli
+/strava
+/stravacli
 
 # Intermediate spec conversion artifacts (only strava.minimal.json is needed)
 strava.swagger.json
