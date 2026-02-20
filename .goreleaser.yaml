@@ -1,0 +1,69 @@
+version: 2
+
+project_name: stravacli
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+    binary: stravacli
+
+archives:
+  - formats:
+      - tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - Merge pull request
+      - Merge branch
+
+# Uncomment to publish a Homebrew formula to a tap repository.
+# Requires a repo at github.com/Brainsoft-Raxat/homebrew-tap and
+# a HOMEBREW_TAP_GITHUB_TOKEN secret in your release environment.
+#
+# brews:
+#   - name: stravacli
+#     repository:
+#       owner: Brainsoft-Raxat
+#       name: homebrew-tap
+#       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+#     homepage: https://github.com/Brainsoft-Raxat/strava-cli
+#     description: "A production-ready CLI for the Strava API"
+#     license: MIT
+#     install: bin.install "stravacli"
+#     test: |
+#       system "#{bin}/stravacli --version"

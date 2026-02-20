@@ -1,0 +1,8 @@
+# Binary
+strava
+
+# Intermediate spec conversion artifacts (only strava.minimal.json is needed)
+strava.swagger.json
+strava.openapi.json
+strava.bundled.json
+strava.openapi.bundled.json

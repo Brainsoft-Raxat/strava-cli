@@ -1,0 +1,5 @@
+2a6703cc72a36e6ab869b32b4096befa87f343a4b8dec13e19b50ec7fcae083e  stravacli_0.0.1-next_darwin_amd64.tar.gz
+a793e0e76ce6033cc8039e067552de414a47e4335b5fc664f98b6b922ba9f48c  stravacli_0.0.1-next_darwin_arm64.tar.gz
+c064bf9780fbb8dcc6d1115bee47e518474bd70050aed151038d06c92eb0336a  stravacli_0.0.1-next_linux_amd64.tar.gz
+0898fc592ddf1ea534a6c99347a8ba957b63645a800b645bd0b3e3548a57377c  stravacli_0.0.1-next_linux_arm64.tar.gz
+64259dd7c3381420a9f5a2136d3eae5260fcbe98bfe8c70d6345ecba39decb2f  stravacli_0.0.1-next_windows_amd64.zip

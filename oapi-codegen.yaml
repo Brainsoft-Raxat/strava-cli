@@ -1,0 +1,8 @@
+package: client
+output: internal/client/strava_gen.go
+generate:
+  client: true
+  models: true
+  strict-server: false
+output-options:
+  skip-prune: false
